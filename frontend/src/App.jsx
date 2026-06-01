@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, createUser } from "./features/thunk/userThunk";
+import { fetchUsers, createUser, updateUser } from "./features/thunk/userThunk";
 import { styles } from "./custom.js";
 import SideBar from "./components/SideBar";
 import Header from "./components/Header";
@@ -20,6 +20,9 @@ function App() {
     city: "",
   });
 
+  // edit user
+  const [editUser, setEditUser] = useState(null);
+
   const { users, loading, error } = useSelector((state) => state.users);
 
   useEffect(() => {
@@ -34,20 +37,38 @@ function App() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const result = await dispatch(createUser(formData));
+  let result;
 
-    if (createUser.fulfilled.match(result)) {
-      setShowModal(false);
-      setFormData({
-        name: "",
-        email: "",
-        mobile: "",
-        city: "",
-      });
-    }
-  };
+  if (editUser) {
+    result = await dispatch(
+      updateUser({
+        id: editUser._id,
+        userData: formData,
+      })
+    );
+  } else {
+    result = await dispatch(
+      createUser(formData)
+    );
+  }
+
+  if (
+    createUser.fulfilled.match(result) ||
+    updateUser.fulfilled.match(result)
+  ) {
+    setShowModal(false);
+    setEditUser(null);
+
+    setFormData({
+      name: "",
+      email: "",
+      mobile: "",
+      city: "",
+    });
+  }
+};
 
   if (loading) {
     return (
@@ -72,6 +93,20 @@ function App() {
       u.city.toLowerCase().includes(search.toLowerCase())
   );
 
+  // handle edit
+  const handleEdit = (user) => {
+  setEditUser(user);
+
+  setFormData({
+    name: user.name,
+    email: user.email,
+    mobile: user.mobile,
+    city: user.city,
+  });
+
+  setShowModal(true);
+};
+
   return (
     <div style={styles.layout}>
       <SideBar />
@@ -83,7 +118,7 @@ function App() {
 
         <SearchBar search={search} setSearch={setSearch} />
 
-        <UserTable users={filteredUsers} />
+        <UserTable users={filteredUsers} handleEdit={handleEdit}/>
       </main>
 
       <AddUserModal

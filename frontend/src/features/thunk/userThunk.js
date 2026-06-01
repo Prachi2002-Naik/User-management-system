@@ -35,3 +35,21 @@ export const createUser = createAsyncThunk(
     }
   }
 );
+
+// update user 
+
+export const updateUser = createAsyncThunk(
+  "users/updateUser",
+  async ({ id, userData }, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/users/${id}`,
+        userData
+      );
+
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

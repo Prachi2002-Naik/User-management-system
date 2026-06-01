@@ -6,6 +6,7 @@ function AddUserModal({
   formData,
   handleChange,
   handleSubmit,
+  editUser,
 }) {
   if (!showModal) {
     return null;
@@ -38,7 +39,7 @@ function AddUserModal({
             fontSize: "20px",
           }}
         >
-          Add New User
+          {editUser ? "Update User" : "Add New User"}
         </h2>
 
         <form onSubmit={handleSubmit}>
@@ -126,7 +127,7 @@ function AddUserModal({
             </button>
 
             <button type="submit" style={styles.btnAdd}>
-              Save User
+              {editUser ? "Update User" : "Save User"}
             </button>
           </div>
         </form>

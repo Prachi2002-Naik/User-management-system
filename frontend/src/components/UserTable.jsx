@@ -9,7 +9,7 @@ function getInitials(name) {
     .toUpperCase();
 }
 
-function UserTable({ users }) {
+function UserTable({ users, handleEdit  }) {
   return (
     <div style={styles.tableWrap}>
       <table style={styles.table}>
@@ -54,7 +54,7 @@ function UserTable({ users }) {
 
               <td style={styles.td}>
                 <div style={styles.actions}>
-                  <button style={styles.btnEdit}>
+                  <button style={styles.btnEdit} onClick={() => handleEdit(user)}>
                     Edit
                   </button>
 
