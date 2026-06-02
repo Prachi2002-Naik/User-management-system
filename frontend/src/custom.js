@@ -140,7 +140,7 @@ export const styles = {
       background: "#17171E",
       border: "1px solid #2A2A38",
       borderRadius: "16px",
-      overflow: "hidden",
+      // overflow: "hidden",
     },
     table: {
       width: "100%",
