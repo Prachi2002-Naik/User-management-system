@@ -2,7 +2,7 @@ import { styles } from "../custom.js";
 
 function SideBar() {
   return (
-    <aside style={styles.aside}>
+    <aside style={styles.aside} className="sidebar">
       <div style={styles.logo}>
         User<span style={styles.logoSpan}>Admin</span>
       </div>

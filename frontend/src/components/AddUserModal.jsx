@@ -25,6 +25,7 @@ function AddUserModal({
       }}
     >
       <div
+      className="modal-box"
         style={{
           background: "#17171E",
           width: "450px",

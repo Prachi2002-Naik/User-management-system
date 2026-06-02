@@ -108,10 +108,10 @@ function App() {
 };
 
   return (
-    <div style={styles.layout}>
+    <div  className="dashboard-layout"  style={styles.layout}>
       <SideBar />
 
-      <main style={styles.main}>
+      <main className="main-content"  style={styles.main}>
         <Header setShowModal={setShowModal} />
 
         <StatsCards users={users} />

@@ -2,9 +2,9 @@ import { styles } from "../custom.js";
 
 function Header({ setShowModal }) {
   return (
-    <div style={styles.header}>
+    <div  className="header-wrap" style={styles.header}>
       <div>
-        <h1 style={styles.pageTitle}>
+        <h1  className="page-title" style={styles.pageTitle}>
           User Dashboard
         </h1>
 

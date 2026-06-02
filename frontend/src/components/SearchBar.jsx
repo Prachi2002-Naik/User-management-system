@@ -3,6 +3,7 @@ import { styles } from "../custom.js";
 function SearchBar({ search, setSearch }) {
   return (
     <div
+      className="search-wrap"
       style={{
         display: "flex",
         justifyContent: "flex-end",
@@ -10,6 +11,7 @@ function SearchBar({ search, setSearch }) {
       }}
     >
       <input
+        className="search-input"
         type="text"
         placeholder="🔍 Search users..."
         style={styles.searchBar}

@@ -11,8 +11,8 @@ function getInitials(name) {
 
 function UserTable({ users, handleEdit  }) {
   return (
-    <div style={styles.tableWrap}>
-      <table style={styles.table}>
+    <div style={styles.tableWrap} className="table-container">
+      <table style={styles.table} className="table">
         <thead style={styles.thead}>
           <tr>
             <th style={styles.th}>Name</th>

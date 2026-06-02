@@ -6,24 +6,24 @@ function StatsCards({ users }) {
   ].length;
 
   return (
-    <div style={styles.stats}>
+    <div style={styles.stats} className="stats-grid">
       <div style={styles.statCard()}>
         <p style={styles.statLabel}>Total Users</p>
-        <h2 style={styles.statNum("#9B8FFF")}>
+        <h2  className="stat-number" style={styles.statNum("#9B8FFF")}>
           {users.length}
         </h2>
       </div>
 
       <div style={styles.statCard()}>
         <p style={styles.statLabel}>Active Users</p>
-        <h2 style={styles.statNum("#10B981")}>
+        <h2  className="stat-number" style={styles.statNum("#10B981")}>
           {users.length}
         </h2>
       </div>
 
       <div style={styles.statCard()}>
         <p style={styles.statLabel}>Cities</p>
-        <h2 style={styles.statNum("#F59E0B")}>
+        <h2  className="stat-number" style={styles.statNum("#F59E0B")}>
           {uniqueCities}
         </h2>
       </div>
