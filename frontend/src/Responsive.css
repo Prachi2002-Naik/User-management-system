@@ -69,4 +69,13 @@
   .stat-number {
     font-size: 26px !important;
   }
+
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .table-responsive table {
+    min-width: 650px;
+  }
 }
