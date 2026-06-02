@@ -8,7 +8,7 @@ export const fetchUsers = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/users"
+         "https://user-management-system-lkzz.onrender.com/api/users"
       );
 
       return response.data.data;
@@ -23,7 +23,7 @@ export const createUser = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users",
+        "https://user-management-system-lkzz.onrender.com/api/users",
         userData
       );
 
@@ -43,7 +43,7 @@ export const updateUser = createAsyncThunk(
   async ({ id, userData }, thunkAPI) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/users/${id}`,
+        `https://user-management-system-lkzz.onrender.com/api/users/${id}`,
         userData
       );
 
