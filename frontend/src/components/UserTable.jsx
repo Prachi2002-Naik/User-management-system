@@ -9,7 +9,7 @@ function getInitials(name) {
     .toUpperCase();
 }
 
-function UserTable({ users, handleEdit  }) {
+function UserTable({ users, handleEdit, handleDelete  }) {
   return (
     <div style={styles.tableWrap} className="table-container table-responsive">
       <table style={styles.table} className="table">
@@ -58,7 +58,7 @@ function UserTable({ users, handleEdit  }) {
                     Edit
                   </button>
 
-                  <button style={styles.btnDel}>
+                  <button style={styles.btnDel} onClick={() => handleDelete(user._id)}>
                     Delete
                   </button>
                 </div>

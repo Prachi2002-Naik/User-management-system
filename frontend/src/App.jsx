@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, createUser, updateUser } from "./features/thunk/userThunk";
+import { fetchUsers, createUser, updateUser, deleteUser } from "./features/thunk/userThunk";
 import { styles } from "./custom.js";
 import SideBar from "./components/SideBar";
 import Header from "./components/Header";
@@ -101,10 +101,21 @@ function App() {
     name: user.name,
     email: user.email,
     mobile: user.mobile,
-    city: user.city,
+    city: user.city || "",
   });
 
   setShowModal(true);
+};
+
+
+const handleDelete = async (id) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this user?"
+  );
+
+  if (!confirmDelete) return;
+
+  await dispatch(deleteUser(id));
 };
 
   return (
@@ -118,7 +129,7 @@ function App() {
 
         <SearchBar search={search} setSearch={setSearch} />
 
-        <UserTable users={filteredUsers} handleEdit={handleEdit}/>
+        <UserTable users={filteredUsers} handleEdit={handleEdit} handleDelete={handleDelete}/>
       </main>
 
       <AddUserModal
