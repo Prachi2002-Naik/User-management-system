@@ -10,6 +10,8 @@ function getInitials(name) {
 }
 
 function UserTable({ users, handleEdit, handleDelete  }) {
+  console.log("users", users);
+  
   return (
     <div style={styles.tableWrap} className="table-container table-responsive">
       <table style={styles.table} className="table">
@@ -18,6 +20,7 @@ function UserTable({ users, handleEdit, handleDelete  }) {
             <th style={styles.th}>Name</th>
             <th style={styles.th}>Email</th>
             <th style={styles.th}>City</th>
+            <th style={styles.th}>Mobile</th>
             <th style={styles.thCenter}>Actions</th>
           </tr>
         </thead>
@@ -43,12 +46,23 @@ function UserTable({ users, handleEdit, handleDelete  }) {
                   ...styles.emailText,
                 }}
               >
-                {user.email}
+              <a href={`mailto:${user.email}`}>
+              {user.email}
+              </a>
               </td>
 
               <td style={styles.td}>
                 <span style={styles.cityPill}>
                   {user.city}
+                </span>
+              </td>
+
+              <td style={styles.td}>
+                <span style={styles.mobileText}>
+                 <a href={`tel:${user.mobile}`}>
+                 {user.mobile}
+                 </a>
+              
                 </span>
               </td>
 

@@ -197,6 +197,12 @@ export const styles = {
     emailText: {
       color: "#888AA8",
       fontSize: "13px",
+      cursor:"pointer"
+    },
+    mobileText: {
+      color: "#888AA8",
+      fontSize: "13px",
+      cursor:"pointer"
     },
     cityPill: {
       background: "#6C63FF22",

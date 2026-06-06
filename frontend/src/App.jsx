@@ -44,6 +44,36 @@ function App() {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
+  if (!formData.name.trim()) {
+    toast.error("Name is required");
+    return;
+  }
+  
+  if (!formData.email.trim()) {
+    toast.error("Email is required");
+    return;
+  }
+  
+  if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    toast.error("Enter valid email");
+    return;
+  }
+  
+  if (!formData.mobile.trim()) {
+    toast.error("Mobile number is required");
+    return;
+  }
+  
+  if (!/^\d{10}$/.test(formData.mobile)) {
+    toast.error("Mobile must be exactly 10 digits");
+    return;
+  }
+  
+  if (!formData.city.trim()) {
+    toast.error("City is required");
+    return;
+  }
+
   let result;
 
   if (editUser) {
@@ -203,9 +233,10 @@ const confirmDelete = async() =>{
         >
           <button
             style={styles.btnEdit}
-            onClick={() =>
-              setShowDeleteModal(false)
-            }
+            onClick={() => {
+              setShowDeleteModal(false);
+              setSelectedUserId(null);
+            }}
           >
             Cancel
           </button>
