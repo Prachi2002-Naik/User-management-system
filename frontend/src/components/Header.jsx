@@ -1,6 +1,8 @@
 import { styles } from "../custom.js";
 
-function Header({ setShowModal }) {
+function Header({  setShowModal,
+  setEditUser,
+  setFormData, }) {
   return (
     <div  className="header-wrap" style={styles.header}>
       <div>
@@ -14,11 +16,22 @@ function Header({ setShowModal }) {
       </div>
 
       <button
-        style={styles.btnAdd}
-        onClick={() => setShowModal(true)}
-      >
-        + Add User
-      </button>
+  style={styles.btnAdd}
+  onClick={() => {
+    setEditUser(null);
+
+    setFormData({
+      name: "",
+      email: "",
+      mobile: "",
+      city: "",
+    });
+
+    setShowModal(true);
+  }}
+>
+  + Add User
+</button>
     </div>
   );
 }

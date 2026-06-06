@@ -1,4 +1,5 @@
 import { styles } from "../custom.js";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
 function getInitials(name) {
   return name
@@ -9,10 +10,12 @@ function getInitials(name) {
     .toUpperCase();
 }
 
-function UserTable({ users, handleEdit, handleDelete  }) {
-  console.log("users", users);
+function UserTable({ users, handleEdit, handleDelete, totalPages, currentPage, setCurrentPage }) {
+  // console.log("users", users);
   
   return (
+
+   <>
     <div style={styles.tableWrap} className="table-container table-responsive">
       <table style={styles.table} className="table">
         <thead style={styles.thead}>
@@ -69,11 +72,11 @@ function UserTable({ users, handleEdit, handleDelete  }) {
               <td style={styles.td}>
                 <div style={styles.actions}>
                   <button style={styles.btnEdit} onClick={() => handleEdit(user)}>
-                    Edit
+                    <FiEdit2/>
                   </button>
 
                   <button style={styles.btnDel} onClick={() => handleDelete(user._id)}>
-                    Delete
+                    <FiTrash2/>
                   </button>
                 </div>
               </td>
@@ -88,6 +91,41 @@ function UserTable({ users, handleEdit, handleDelete  }) {
         </div>
       )}
     </div>
+
+    <div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "15px",
+    marginTop: "20px",
+  }}
+>
+  <button
+    style={{...styles.btnEdit, fontSize: "22px"}}
+    disabled={currentPage === 1}
+    onClick={() =>
+      setCurrentPage(currentPage - 1)
+    }
+  >
+    &laquo;
+  </button>
+
+  <span>
+    Page {currentPage} of {totalPages}
+  </span>
+
+  <button
+    style={{...styles.btnEdit, fontSize: "22px"}}
+    disabled={currentPage === totalPages}
+    onClick={() =>
+      setCurrentPage(currentPage + 1)
+    }
+  >
+     &raquo;
+  </button>
+</div>
+  </> 
   );
 }
 

@@ -7,11 +7,17 @@ function AddUserModal({
   handleChange,
   handleSubmit,
   editUser,
-  buttonloading
+  buttonloading,
+  setEditUser
+
 }) {
   if (!showModal) {
     return null;
   }
+
+
+  // console.log("editUser", editUser);
+  
 
   return (
     <div
@@ -41,7 +47,7 @@ function AddUserModal({
             fontSize: "20px",
           }}
         >
-          {editUser ? "Update User" : "Add New User"}
+          {editUser ? "Update User Data": "Add New User"}
         </h2>
 
         <form onSubmit={handleSubmit}>
@@ -122,7 +128,10 @@ function AddUserModal({
           >
             <button
               type="button"
-              onClick={() => setShowModal(false)}
+              onClick={() => {
+                setShowModal(false);
+                setEditUser(null);
+              }}
               style={styles.btnDel}
             >
               Cancel

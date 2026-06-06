@@ -28,6 +28,9 @@ function App() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 4;
+
   const { users, loading, buttonloading, deleteloading, error } = useSelector((state) => state.users);
 
   useEffect(() => {
@@ -131,6 +134,18 @@ function App() {
       u.city.toLowerCase().includes(search.toLowerCase())
   );
 
+  const lastUserIndex = currentPage * usersPerPage;
+  const firstUserIndex = lastUserIndex - usersPerPage;
+
+  const currentUsers = filteredUsers.slice(
+    firstUserIndex,
+    lastUserIndex
+   );
+
+  const totalPages = Math.ceil(
+    filteredUsers.length / usersPerPage
+  );
+
   // handle edit
   const handleEdit = (user) => {
   setEditUser(user);
@@ -170,13 +185,26 @@ const confirmDelete = async() =>{
       <SideBar />
 
       <main className="main-content"  style={styles.main}>
-        <Header setShowModal={setShowModal} />
+      <Header
+  setShowModal={setShowModal}
+  setEditUser={setEditUser}
+  setFormData={setFormData}
+/>
 
         <StatsCards users={users} />
 
-        <SearchBar search={search} setSearch={setSearch} />
+        <SearchBar search={search} setSearch={(value) => {
+    setSearch(value);
+    setCurrentPage(1);
+  }} />
 
-        <UserTable users={filteredUsers} handleEdit={handleEdit} handleDelete={handleDelete}/>
+        <UserTable 
+        users={currentUsers} 
+        handleEdit={handleEdit} 
+        handleDelete={handleDelete}
+        totalPages={totalPages}
+        currentPage={currentPage}
+       setCurrentPage={setCurrentPage}/>
       </main>
 
       <AddUserModal
@@ -187,6 +215,8 @@ const confirmDelete = async() =>{
         handleSubmit={handleSubmit}
         buttonloading={buttonloading}
         deleteloading ={deleteloading}
+        editUser={editUser}
+        setEditUser={setEditUser}
       />
 
 {
