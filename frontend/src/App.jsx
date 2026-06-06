@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, createUser, updateUser, deleteUser } from "./features/thunk/userThunk";
 import { styles } from "./custom.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import SideBar from "./components/SideBar";
 import Header from "./components/Header";
 import StatsCards from "./components/StatsCards";
@@ -22,6 +25,8 @@ function App() {
 
   // edit user
   const [editUser, setEditUser] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const { users, loading, error } = useSelector((state) => state.users);
 
@@ -54,10 +59,10 @@ function App() {
     );
   }
 
-  if (
-    createUser.fulfilled.match(result) ||
-    updateUser.fulfilled.match(result)
+  if (createUser.fulfilled.match(result) || updateUser.fulfilled.match(result)
   ) {
+    toast.success(editUser ? "User updated successfully" :"User created successfully")
+  
     setShowModal(false);
     setEditUser(null);
 
@@ -67,6 +72,9 @@ function App() {
       mobile: "",
       city: "",
     });
+  }
+  else{
+    toast.error("Something went wrong");
   }
 };
 
@@ -108,17 +116,26 @@ function App() {
 };
 
 
-const handleDelete = async (id) => {
-  const confirmDelete = window.confirm(
-    "Are you sure you want to delete this user?"
-  );
-
-  if (!confirmDelete) return;
-
-  await dispatch(deleteUser(id));
+const handleDelete = (id) => {
+  setSelectedUserId(id);
+  setShowDeleteModal(true);
 };
 
+const confirmDelete = async() =>{
+   const result = await dispatch(deleteUser(selectedUserId));
+   if(deleteUser.fulfilled.match(result)){
+    toast.success("User deleted successfully");
+   }
+   else{
+    toast.error("Something went wrong");
+   }
+
+   setShowDeleteModal(false);
+   setSelectedUserId(null);
+}
+
   return (
+    <>
     <div  className="dashboard-layout"  style={styles.layout}>
       <SideBar />
 
@@ -139,7 +156,75 @@ const handleDelete = async (id) => {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
+
+{
+  showDeleteModal && (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.6)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 1000,
+      }}
+    >
+      <div
+        style={{
+          background: "#17171E",
+          padding: "24px",
+          width: "400px",
+          borderRadius: "16px",
+          border: "1px solid #2A2A38",
+        }}
+      >
+        <h2>
+          Delete User
+        </h2>
+
+        <p
+          style={{
+            color: "#888AA8",
+            marginTop: "10px",
+          }}
+        >
+          Are you sure you want to delete
+          this user?
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: "10px",
+            marginTop: "20px",
+          }}
+        >
+          <button
+            style={styles.btnEdit}
+            onClick={() =>
+              setShowDeleteModal(false)
+            }
+          >
+            Cancel
+          </button>
+
+          <button
+            style={styles.btnDel}
+            onClick={confirmDelete}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
     </div>
+  )
+}
+    </div>
+
+    <ToastContainer position="top-right" autoClose={3000}/>
+    </>
   );
 }
 
