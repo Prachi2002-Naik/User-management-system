@@ -7,6 +7,7 @@ function AddUserModal({
   handleChange,
   handleSubmit,
   editUser,
+  buttonloading
 }) {
   if (!showModal) {
     return null;
@@ -127,8 +128,8 @@ function AddUserModal({
               Cancel
             </button>
 
-            <button type="submit" style={styles.btnAdd}>
-              {editUser ? "Update User" : "Save User"}
+            <button type="submit" disabled={buttonloading} style={styles.btnAdd}>
+              {buttonloading? editUser? "Updating..." : "Creating..." : editUser ? "Update User" : "Add User"}
             </button>
           </div>
         </form>

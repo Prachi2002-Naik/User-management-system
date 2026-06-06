@@ -4,6 +4,8 @@ import {createUser, fetchUsers, updateUser, deleteUser} from '../thunk/userThunk
 const initialState = {
   users: [],
   loading: false,
+  buttonloading: false,
+  deleteloading: false,
   error: null,
 };
 
@@ -16,18 +18,18 @@ const userSlice = createSlice({
     builder
           //  create user
           .addCase(createUser.pending, (state) => {
-            state.loading = true;
+            state.buttonloading = true;
           })
           
           .addCase(createUser.fulfilled, (state, action) => {
-            state.loading = false;
+            state.buttonloading = false;
           
             // New user list chya top la add hoil
             state.users.unshift(action.payload);
           })
           
           .addCase(createUser.rejected, (state, action) => {
-            state.loading = false;
+            state.buttonloading = false;
             state.error = action.payload;
           })
 
@@ -53,10 +55,10 @@ const userSlice = createSlice({
 
           // Update User
         .addCase(updateUser.pending, (state) => {
-          state.loading = true;
+          state.buttonloading = true;
         })
         .addCase(updateUser.fulfilled, (state, action) => {
-          state.loading = false;
+          state.buttonloading = false;
 
           state.users = state.users.map((user) =>
             user._id === action.payload._id
@@ -65,18 +67,19 @@ const userSlice = createSlice({
           )
         })
         .addCase(updateUser.rejected, (state, action) => {
-          state.loading = false;
+          state.buttonloading = false;
           state.error = action.payload;
         })
 
         // Delete User
         // Delete User
       .addCase(deleteUser.pending, (state) => {
-        state.loading = true;
+        state.deleteloading = true;
+
       })
 
       .addCase(deleteUser.fulfilled, (state, action) => {
-        state.loading = false;
+        state.deleteloading = false;
 
         state.users = state.users.filter(
           (user) => user._id !== action.payload
@@ -84,7 +87,7 @@ const userSlice = createSlice({
       })
 
       .addCase(deleteUser.rejected, (state, action) => {
-        state.loading = false;
+        state.deleteloading = false;
         state.error = action.payload;
       });
 

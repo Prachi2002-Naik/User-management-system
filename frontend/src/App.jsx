@@ -28,7 +28,7 @@ function App() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
 
-  const { users, loading, error } = useSelector((state) => state.users);
+  const { users, loading, buttonloading, deleteloading, error } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -185,6 +185,8 @@ const confirmDelete = async() =>{
         formData={formData}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        buttonloading={buttonloading}
+        deleteloading ={deleteloading}
       />
 
 {
@@ -242,11 +244,14 @@ const confirmDelete = async() =>{
           </button>
 
           <button
-            style={styles.btnDel}
-            onClick={confirmDelete}
+          style={styles.btnDel}
+          onClick={confirmDelete}
+          disabled={deleteloading}
           >
-            Delete
-          </button>
+         {deleteloading
+         ? "Deleting..."
+         : "Delete"}
+         </button>
         </div>
       </div>
     </div>
